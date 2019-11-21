@@ -15,17 +15,7 @@ class App extends Component {
     mostrarPessoas: false
   }  
 
-  switchManipuladorNome = (novoNome) => {  
-    
-    this.setState({
-      pessoas: [
-        {nome: novoNome, idade: 15},
-        {nome: 'Jefferson', idade: 20},
-        {nome: 'Esther', idade: 19}
-      ]
-    })
-  }
-
+  
   nomeManipuladorAlterado = (event) => {
     this.setState({
       pessoas: [
@@ -34,6 +24,12 @@ class App extends Component {
         {nome: 'Angela', idade: 45}
       ]
     })
+  }
+
+  apagarManipuladorPessoa = (pessoaIndex) => {
+    const pessoas = this.state.pessoas;
+    pessoas.splice(pessoaIndex, 1);
+    this.setState({pessoas: pessoas});
   }
 
   toogleManipuladorPessoas = () => {
@@ -54,8 +50,9 @@ class App extends Component {
     if (this.state.mostrarPessoas) {
       pessoas = (
         <div>
-        {this.state.pessoas.map(pessoa => {
+        {this.state.pessoas.map((pessoa, index) => {
           return <Pessoa 
+          click={() => this.apagarManipuladorPessoa(index)}
           nome={pessoa.nome} 
           idade={pessoa.idade}/>
         })}
